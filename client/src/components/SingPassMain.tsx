@@ -4,7 +4,7 @@ const SingPassMain = () => {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        navigate('/page2');
+        navigate('/mockpassconnector');
     };
 
     return (

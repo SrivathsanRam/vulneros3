@@ -66,7 +66,7 @@ const SelectMobility = () => {
         height={40}
         parentHeight={150}
         fontSize={13}
-        defaultSelection={9}
+        defaultSelection={1}
         updateSelection={(selectedOption) => setMobility(sendOptions[selectedOption])}
         scrollerId="scroll-select-mobility"
       />

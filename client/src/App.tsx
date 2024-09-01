@@ -16,8 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<SingPassMain />} />
         <Route path="/mockpassconnector" element={<SingPassDetails />} />
-        <Route path="/mainpage_vol" element={<MainPageVol />} />
-        <Route path="/mainpage_ben" element={<MainPageBen />} />
+        <Route path="/mainpage-vol" element={<MainPageVol />} />
+        <Route path="/mainpage-ben" element={<MainPageBen />} />
         <Route path="/select-languages" element={<SelectLanguages />} />
         <Route path="/select-mobility" element={<SelectMobility />} />
         <Route path="/input-loved-ones" element={<SelectLovedOnes />} />

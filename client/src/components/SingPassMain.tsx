@@ -1,4 +1,18 @@
 import { useNavigate } from 'react-router-dom';
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBCard,
+    MDBCardBody,
+    MDBInput,
+    MDBIcon,
+    MDBCheckbox
+  }
+  from 'mdb-react-ui-kit';
+
+
 
 const SingPassMain = () => {
     const navigate = useNavigate();
@@ -8,10 +22,44 @@ const SingPassMain = () => {
     };
 
     return (
-        <div>
-            <button onClick={handleButtonClick}>Login with Mockpass</button>
-        </div>
-    );
-};
+        <MDBContainer fluid>
+    
+          <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+            <MDBCol col='12'>
+    
+              <MDBCard className='bg-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px'}}>
+                <MDBCardBody className='p-5 w-100 d-flex flex-column'>
 
+                
+    
+                    <MDBBtn 
+                    style={{ width: '400px', height: '50px', transition: 'all 0.2s ease-in-out', boxSizing: 'border-box' }}
+                    onClick={handleButtonClick} 
+                    className="btn btn-danger mb-4" 
+                    size='lg'>
+                    Login with Singpass
+                  </MDBBtn>
+
+                  <text className='mb-4 text-muted text-center'>or Login with</text>
+    
+                  <MDBInput wrapperClass='mb-4 w-100' label='Email/NRIC/Mobile' id='formControlLg' type='email' size="lg"/>
+                  <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlLg' type='password' size="lg"/>
+    
+                  <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password' />
+                  <MDBBtn 
+                    style={{ width: '400px', height: '50px', transition: 'all 0.2s ease-in-out', boxSizing: 'border-box' }}
+                    onClick={handleButtonClick} 
+                    className="btn btn-danger mb-4" 
+                    size='lg'>
+                    Login
+                  </MDBBtn>
+                </MDBCardBody>
+              </MDBCard>
+    
+            </MDBCol>
+          </MDBRow>
+    
+        </MDBContainer>
+      );
+    }
 export default SingPassMain;

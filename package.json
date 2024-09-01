@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "flask": "^0.2.10",
     "mdb": "^0.1.0",
     "mdb-react-ui-kit": "^8.0.0"
   }

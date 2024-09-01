@@ -8,7 +8,6 @@ import SelectLanguages from './components/SelectLanguages';
 import SelectMobility from './components/SelectMobility';
 import SelectLovedOnes from './components/SelectLovedOnes';
 
-
 function App() {
 
   return (

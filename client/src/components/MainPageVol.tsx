@@ -4,13 +4,14 @@ import ScheduleSelector from 'react-timeslot-selector'
 import { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import "./MainPageVol.css"
+import {format, parseISO} from 'date-fns';
 
 type Volunteer = {
   nric: string;
   name: string;
   address: number;
   certifications: Record<string, string>;
-  languages: string[];
+  languages: string[]
 };
 
 interface Event {
@@ -18,10 +19,12 @@ interface Event {
   title: string;
   icon: string;
   proximity: number;
-  languages: string[];
+  languages: {
+    Languages: string[];
+  };
   description: string;
-  startdatetime: string;
-  enddatetime: string;
+  start_time: string;
+  end_time: string;
   location: number;
 }
 
@@ -31,7 +34,8 @@ const MainPageVol = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
   const volunteer: Volunteer = location.state.volunteer;
-  console.log(schedule);
+  console.log("volunteer"+ JSON.stringify(volunteer))
+  //console.log(schedule);
   const handleChange = (newSchedule: Date[]) => {
     setSchedule(newSchedule);
   };
@@ -64,8 +68,11 @@ const MainPageVol = () => {
   const handleAddEvent = async (event: Event) => {
     const updatedEvent = {
       ...event,
-      languages: Array.from(new Set([...event.languages, ...volunteer.languages])),
+      languages: {
+        Languages: Array.from(new Set([...event.languages.Languages, ...volunteer.languages])),
+      }
     };
+    
     setSelectedEvents([...selectedEvents, updatedEvent]);
     setEvents(events.filter((e) => e.uuid !== event.uuid));
     try {
@@ -110,13 +117,13 @@ const MainPageVol = () => {
       console.error('Error while deleting event:', error);
     }
   };
-  
+  console.log(events);
 
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-3">
-          <h3 className="text-center">Welcome, {volunteer.name}!</h3>
+          <h4 className="text-center mt-4">Welcome, {volunteer.name}!</h4>
           <ScheduleSelector
             selection={schedule}
             numDays={5}
@@ -128,19 +135,22 @@ const MainPageVol = () => {
 
         
         <div className="col-5">
-        <h2 className="mb-4">Available Events</h2>
+        <h2 className="mb-4 mt-4 text-center">Available Events</h2>
         <div className="scrollable-container">
           {events.length === 0 ? (
             <p>Loading...</p>
           ) : (
-            events.map((event, index) => (
-
+            events.sort((a, b) => a.proximity > b.proximity ? 1 : -1)
+            .map((event, index) => (
+              (schedule.some((dateTime: string | number | Date) => new Date(dateTime).getTime() === new Date(event.start_time).getTime())) &&
               <EventCard
                 key={index}
                 title={event.title}
                 icon={event.icon}
                 proximity={event.proximity}
-                languages={event.languages}
+                start_time={event.start_time}
+                end_time = {event.end_time}
+                languages= {event.languages}
                 description={event.description}
                 onAdd={() => handleAddEvent(event)}
               />
@@ -149,7 +159,7 @@ const MainPageVol = () => {
           </div>
         </div>
         <div className="col-4">
-        <h2>Selected Events</h2>
+        <h2 className="text-center mt-4 mb-4">Selected Events</h2>
           {selectedEvents.length === 0 ? (
             <p>No events selected yet.</p>
           ) : (
@@ -157,7 +167,7 @@ const MainPageVol = () => {
               {selectedEvents.map((event, index) => (
                 <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                   <div>
-                    <strong>{event.title}</strong> - {event.proximity}
+                    <strong>{event.title}</strong> - {format(parseISO(event.start_time),"d MMM yyyy h:mma")} to {format(parseISO(event.end_time),"h:mma")}
                   </div>
                   <button className="btn btn-danger btn-sm" onClick={() => handleRemoveEvent(event)}>
                     Remove

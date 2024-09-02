@@ -1,0 +1,9 @@
+.rounded-box {
+    background-color: #e0f7fa; /* Light blue background */
+    border: 1px solid #b2ebf2; /* Light blue border */
+    padding-left: 15px;   
+    padding-right: 15px;           /* Padding inside the box */
+    border-radius: 10px;        /* Rounded corners */
+    font-family: Arial, sans-serif; /* Font styling */
+    line-height: 1.6;           /* Line height for better readability */
+  }

@@ -190,7 +190,61 @@ def get_volunteer_events():
         print(e)
         return jsonify({'error': 'Something went wrong'}), 500
 
+#ADD EVENT
+@app.route('/addevent', methods=['POST'])
+def add_event():
+    data = request.json
+    print(data["uuid"])
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
 
+    try:
+        # Insert the event into Supabase
+        response = supabase.table('Events').update({'languages':data['languages']}).eq("uuid",data['uuid']).execute()
+        return jsonify(response.data), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'error': 'Failed to add event'}), 500
+
+
+# get events based on beneficiary
+@app.route('/getbenevents', methods=['POST'])
+def get_beneficiary_events():
+    data = request.json
+    
+    beneficiary_languages = data['languages']
+    beneficiary_address = data['address']
+    beneficiary_mobility = data['mobility']
+    print(beneficiary_languages,beneficiary_address,beneficiary_mobility)
+    try:
+        # Fetch all events from Supabase
+        events_response = supabase.table('Events').select('*').execute()
+        if (events_response.data):
+            events = events_response.data
+        else:
+            return jsonify({'error': 'Failed to fetch events'}), 500
+
+        filtered_events = []
+
+        # Filter events based on volunteer's certifications and languages
+        for event in events:
+            event_requirements = event.get('prerequisites', {})
+            event_languages = event_requirements.get('Languages', [])
+            event['proximity'] = calculate_proximity(beneficiary_address,event['location'])
+            if any(language in event_languages for language in beneficiary_languages):
+                if (beneficiary_mobility == 'Moderate' and event['proximity']<40):
+                    filtered_events.append(event)
+
+        # Sort events by startdatetime first, then by proximity
+        filtered_events.sort(key=lambda e: (datetime.strptime(e['start_time'], '%Y-%m-%dT%H:%M:%S'), 
+                                            calculate_proximity(beneficiary_address, e['location'])))
+        
+        print("Fil"+str(filtered_events))
+        return jsonify(filtered_events), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': 'Something went wrong'}), 500
 
 
 

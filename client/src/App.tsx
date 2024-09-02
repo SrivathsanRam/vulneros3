@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import SelectLanguages from './components/SelectLanguages';
 import SelectMobility from './components/SelectMobility';
 import SelectLovedOnes from './components/SelectLovedOnes';
+import VWOdash from './components/VWOdash';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/select-languages" element={<SelectLanguages />} />
         <Route path="/select-mobility" element={<SelectMobility />} />
         <Route path="/input-loved-ones" element={<SelectLovedOnes />} />
+        <Route path="/vwo-dashboard" element={<VWOdash />} />
       </Routes>
     </Router>
   );

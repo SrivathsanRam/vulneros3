@@ -41,7 +41,7 @@ def calculate_proximity_transit(address1,address2):
         long2 = json.loads(resp2.text)['results'][0]['LONGITUDE']
         print(lat1,long1,lat2,long2)
 
-        url = f"https://www.onemap.gov.sg/api/public/routingsvc/route?start={lat1}%2C{long1}&end={lat2}%2C{long2}&routeType=pt&mode=TRANSIT&date=02-09-2024&time=07%3A35%3A00"
+        url = f"https://www.onemap.gov.sg/api/public/routingsvc/route?start={lat1}%2C{long1}&end={lat2}%2C{long2}&routeType=pt&mode=TRANSIT&date=02-09-2024&time=07%3A35%3A00&numItineraries=1"
         #url = f"https://www.onemap.gov.sg/api/public/routingsvc/route?start={lat1}%2C{long1}&end={lat2}%2C{long2}&routeType=pt&date=08-13-2023&time=07%3A35%3A00&mode=TRANSIT&maxWalkDistance=1000"
         headers = {"Authorization": ONEMAP_KEY}
         response = requests.request("GET",url,headers=headers)

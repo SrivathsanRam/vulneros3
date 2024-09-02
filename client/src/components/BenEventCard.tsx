@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {format, parseISO} from 'date-fns';
+import './BenEventCard.css'
 
-interface EventCardProps {
+interface BenEventCardProps {
   title: string;
   icon: string;
   proximity: number;
@@ -16,7 +17,7 @@ interface EventCardProps {
   onAdd: () => void;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ title, icon, proximity, languages, description, start_time, end_time, onAdd }) => {
+const BenEventCard: React.FC<BenEventCardProps> = ({ title, icon, proximity, languages, description, start_time, end_time, onAdd }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalOpen = () => setShowModal(!showModal);
@@ -30,7 +31,6 @@ const EventCard: React.FC<EventCardProps> = ({ title, icon, proximity, languages
   return (
     <div className="card mb-3" style={{ cursor: 'pointer' }} onClick={handleModalOpen}>
       <div className="card-body d-flex justify-content-between">
-        
         <div>
           <h5>{title}</h5>
           <p><strong>Proximity:</strong> {proximity} mins</p>
@@ -39,6 +39,11 @@ const EventCard: React.FC<EventCardProps> = ({ title, icon, proximity, languages
         <div>
           <img src={icon} alt="event icon" style={{ width: '80px', height: '80px' }} />
         </div>
+      </div>
+      <div>
+        <p className='rounded-box'>
+            test
+        </p>
       </div>
 
       <Modal show={showModal} onHide={handleModalClose}>
@@ -63,4 +68,4 @@ const EventCard: React.FC<EventCardProps> = ({ title, icon, proximity, languages
   );
 };
 
-export default EventCard;
+export default BenEventCard;

@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from supabase import create_client, Client
 from secret_config import SUPABASE_URL, SUPABASE_KEY
+from datetime import datetime
+from getProx import calculate_proximity, calculate_proximity_transit
 
 supabase: Client = create_client(SUPABASE_URL,SUPABASE_KEY)
 
@@ -144,6 +146,53 @@ def save_loved():
     except Exception as e:
         print(f"Error updating beneficiary data: {e}")
         return jsonify({"error": "Server error"}), 500
+
+# get events based on volunteer
+@app.route('/getvolevents', methods=['POST'])
+def get_volunteer_events():
+    data = request.json
+    if not data or 'certifications' not in data or 'languages' not in data or 'address' not in data:
+        return jsonify({'error': 'Missing volunteer data'}), 400
+
+    volunteer_certifications = data['certifications']
+    volunteer_languages = data['languages']
+    volunteer_address = data['address']
+    print(volunteer_languages)
+    try:
+        # Fetch all events from Supabase
+        events_response = supabase.table('Events').select('*').execute()
+        if (events_response.data):
+            events = events_response.data
+        else:
+            return jsonify({'error': 'Failed to fetch events'}), 500
+
+        #print(events)
+        filtered_events = []
+
+        # Filter events based on volunteer's certifications and languages
+        for event in events:
+            event_requirements = event.get('prerequisites', {})
+            event_languages = event_requirements.get('Languages', [])
+            event_certifications = event_requirements.get('Certifications', [])
+            event['proximity'] = calculate_proximity_transit(volunteer_address,event['location'])
+            if all(language in volunteer_languages for language in event_languages) and \
+               all(certification in volunteer_certifications for certification in event_certifications):
+                filtered_events.append(event)
+
+        # Sort events by startdatetime first, then by proximity
+        filtered_events.sort(key=lambda e: (datetime.strptime(e['start_time'], '%Y-%m-%dT%H:%M:%S'), 
+                                            calculate_proximity_transit(volunteer_address, e['location'])))
+        
+        print(filtered_events)
+        return jsonify(filtered_events), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': 'Something went wrong'}), 500
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

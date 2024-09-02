@@ -10,12 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/runtime-corejs3": "^7.25.6",
     "axios": "^1.7.6",
     "babel-runtime": "^6.26.0",
     "bootstrap": "^5.3.3",
+    "core-js": "^2.6.12",
     "react": "^18.3.1",
+    "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
+    "react-timeslot-selector": "^3.0.12",
     "react-wheelpicker": "^1.0.8",
     "styled-components": "^6.1.13"
   },

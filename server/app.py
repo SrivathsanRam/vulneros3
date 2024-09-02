@@ -112,5 +112,38 @@ def save_mobility():
         print(f"Error updating beneficiary data: {e}")
         return jsonify({"error": "Server error"}), 500
 
+
+#Saving Loved Ones for Beneficiaries
+@app.route('/save_loved_ones', methods=['POST'])
+def save_loved():
+    data = request.get_json()
+    print(data)
+    nric = data.get('nric')
+    lovedOnes = data.get('lovedOnes')
+    visitFrequency = data.get('visitFrequency')
+    
+    if not (lovedOnes):
+        return jsonify({"error": "Incomplete data"}), 400
+
+    try:
+        # Update the beneficiary data in the supabase table
+        
+        update_response = supabase \
+            .table('Beneficiaries') \
+            .update({
+                "loved_ones": {'number': lovedOnes, 'freq': visitFrequency},
+            }) \
+            .eq('NRIC', nric) \
+            .execute()
+
+        if update_response.data:
+            return jsonify({"message": "Beneficiary data updated successfully"}), 200
+        else:
+            return jsonify({"error": "Failed to update"}), 500
+
+    except Exception as e:
+        print(f"Error updating beneficiary data: {e}")
+        return jsonify({"error": "Server error"}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

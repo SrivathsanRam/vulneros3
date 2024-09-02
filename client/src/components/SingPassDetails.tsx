@@ -49,7 +49,7 @@ const SingPassDetails = () => {
           certifications: data.certifications,
           languages: data.languages.Languages,
         };
-        navigate('/mainpage_vol', {state: {volunteer}});
+        navigate('/mainpage-vol', {state: {volunteer}});
       } else if (data && data.type == 'beneficiary'){
         const beneficiary: Beneficiary = {
           nric: data.NRIC,
@@ -62,7 +62,7 @@ const SingPassDetails = () => {
           mobility: data.mobility,
           preferences: data.preferences
         };
-        navigate('/mainpage_ben', {state: {beneficiary}});
+        navigate('/mainpage-ben', {state: {beneficiary}});
       } else {
         setError('Invalid UserID. Please try again.');
       }
@@ -75,9 +75,9 @@ const SingPassDetails = () => {
     <div>
       <h1>Login with Singpass</h1>
       <label>
-        Enter UserID:
+        Enter NRIC:
         <input 
-          type="text" 
+          type="text"
           value={nric} 
           onChange={(e) => setNric(e.target.value)} 
         />

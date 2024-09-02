@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import WheelPicker from 'react-wheelpicker';
 
+const numLovedOptions = ['0','1','2','3','3+'];
 const visitFrequencyOptions = ["Living with", "Daily", "Weekly", "Monthly", "Never"];
 
 const InputLovedOnes: React.FC = () => {
@@ -9,11 +10,11 @@ const InputLovedOnes: React.FC = () => {
   const navigate = useNavigate();
   const { nric } = location.state as { nric: string };
 
-  const [lovedOnes, setLovedOnes] = useState<number>(0);
+  const [lovedOnes, setLovedOnes] = useState<string | null>(null);
   const [visitFrequency, setVisitFrequency] = useState<string | null>(null);
 
   const handleSubmit = async () => {
-    if (lovedOnes < 0 || !visitFrequency) {
+    if (!lovedOnes || !visitFrequency) {
       alert("Please provide all required information.");
       return;
     }
@@ -33,7 +34,7 @@ const InputLovedOnes: React.FC = () => {
       });
 
       if (response.ok) {
-        navigate('/beneficiary-main');
+        navigate('/mainpage-ben');
       } else {
         alert('Failed to save information. Please try again.');
       }
@@ -45,18 +46,26 @@ const InputLovedOnes: React.FC = () => {
   return (
     <div>
       <h1>Input Number of Loved Ones Caring for You</h1>
-      <input
-        type="number"
-        min={0}
-        value={lovedOnes}
-        onChange={(e) => setLovedOnes(parseInt(e.target.value))}
+      <WheelPicker
+        animation='flat'
+        data={numLovedOptions}
+        height={40}
+        parentHeight={150}
+        fontSize={13}
+        defaultSelection={0}
+        updateSelection={(selectedOption) => setLovedOnes(numLovedOptions[selectedOption])}
+        scrollerId='scroll-select-num'
       />
       <h2>How Often Do They Visit You?</h2>
       <WheelPicker
+        animation='flat'
         data={visitFrequencyOptions}
-        onChange={(selectedOption) => setVisitFrequency(selectedOption)}
-        height={150}
-        width={200}
+        height={40}
+        parentHeight={150}
+        fontSize={13}
+        defaultSelection={0}
+        updateSelection={(selectedOption) => setVisitFrequency(visitFrequencyOptions[selectedOption])}
+        scrollerId='scroll-select-loved'
       />
       <button onClick={handleSubmit}>Submit</button>
     </div>

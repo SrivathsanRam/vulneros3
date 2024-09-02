@@ -2,6 +2,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBCheckbox
+}
+from 'mdb-react-ui-kit';
+
 const SingPassDetails = () => {
   type Volunteer = {
     nric: string;
@@ -72,6 +84,58 @@ const SingPassDetails = () => {
   };
 
   return (
+    <MDBContainer 
+    fluid
+    style={{
+      backgroundImage: "url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp')",
+      height: "100vh",
+      backgroundColor: 'rgba(255, 255, 255, 0.5)'
+    }}
+    >
+      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+        <MDBCol col='12'>
+        <h1 className='text-center'>Find your community</h1>
+          <MDBCard className='bg-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px'}}>
+            <MDBCardBody className='p-5 w-100 d-flex flex-column'>
+              <h3 className='mb-4'>Log In</h3>
+
+              
+
+              <MDBInput 
+              wrapperClass='mb-4 w-100' 
+              label='Singpass ID'
+              type="text" 
+              value={nric} 
+              onChange={(e) => setNric(e.target.value)}
+              size="lg"
+              />
+              <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlLg' type='password' size="lg"/>
+
+              <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password' />
+
+              <MDBBtn 
+                style={{ width: '400px', height: '50px', transition: 'all 0.2s ease-in-out', boxSizing: 'border-box' }}
+                onClick={handleSubmit} 
+                className="btn btn-danger mb-4" 
+                size='lg'>
+                Login
+              </MDBBtn>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+
+            </MDBCardBody>
+          </MDBCard>
+
+        </MDBCol>
+      </MDBRow>
+
+    </MDBContainer>
+  );
+
+
+
+
+
+  {/*return (
     <div>
       <h1>Login with Singpass</h1>
       <label>
@@ -85,7 +149,9 @@ const SingPassDetails = () => {
       <button onClick={handleSubmit}>Submit</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
-  );
+  );*/}
+
+
 };
 
 export default SingPassDetails;

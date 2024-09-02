@@ -21,16 +21,22 @@ const SingPassMain = () => {
     };
 
     return (
-        <MDBContainer fluid>
-    
+        <MDBContainer 
+        fluid
+        style={{
+          backgroundImage: "url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp')",
+          height: "100vh",
+          opacity: "100%"
+        }}
+        >
           <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+            
             <MDBCol col='12'>
+              <h1 className='text-center'>Find your community</h1>
+              
     
               <MDBCard className='bg-white my-5 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px'}}>
                 <MDBCardBody className='p-5 w-100 d-flex flex-column'>
-
-                
-    
                     <MDBBtn 
                     style={{ width: '400px', height: '50px', transition: 'all 0.2s ease-in-out', boxSizing: 'border-box' }}
                     onClick={handleButtonClick} 

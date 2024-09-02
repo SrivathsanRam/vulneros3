@@ -27,7 +27,7 @@ const BenEventCard: React.FC<BenEventCardProps> = ({ title, icon, proximity, lan
   const endDate = parseISO(end_time);
   const formattedStart = format(startDate, 'd MMM yyyy h:mma');
   const formattedEnd = format(endDate, 'h:mma');
-
+  console.log("LANG"+ JSON.stringify(languages))
   return (
     <div className="card mb-3" style={{ cursor: 'pointer' }} onClick={handleModalOpen}>
       <div className="card-body d-flex justify-content-between">
@@ -40,11 +40,15 @@ const BenEventCard: React.FC<BenEventCardProps> = ({ title, icon, proximity, lan
           <img src={icon} alt="event icon" style={{ width: '80px', height: '80px' }} />
         </div>
       </div>
-      <div>
-        <p className='rounded-box'>
-            test
-        </p>
+      <div className="row">
+        {languages.Languages.map((language, index) => (
+        <div key={index} className="col-3"><p className='rounded-box'>{language}</p></div>
+        ))}
+        
+        
       </div>
+        
+
 
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>

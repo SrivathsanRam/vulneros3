@@ -247,6 +247,45 @@ def get_beneficiary_events():
         return jsonify({'error': 'Something went wrong'}), 500
 
 
+#Request Event
+@app.route('/reqevent', methods=['POST'])
+def req_event():
+    try:
+        # Parse the JSON request
+        data = request.json
+        print(data)
+        title = data.get('title')
+        start_time = data.get('start_time')
+        end_time = data.get('end_time')
+        icon = data.get('icon')
+        location = data.get('location')
+        description = data.get('description')
+        prerequisites = data.get('prerequisites')
+        languages = data.get('languages')
+
+        # Insert the event into the Supabase table
+        event_data = {
+            'title': title,
+            'start_time': start_time,
+            'end_time': end_time,
+            'icon': icon,
+            'location': location,
+            'description': description,
+            'prerequisites': prerequisites,
+            'languages': languages
+        }
+
+        response = supabase.table('Events').insert([event_data]).execute()
+
+        if response.data:
+            return jsonify({'message': 'Event created successfully', 'data': response.data}), 201
+        else:
+            return jsonify({'error': response['error']['message']}), 400
+
+        # Return the inserted data
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

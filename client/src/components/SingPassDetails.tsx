@@ -1,6 +1,17 @@
 
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBCheckbox
+}
+from 'mdb-react-ui-kit';
 
 const SingPassDetails = () => {
   type Volunteer = {
@@ -72,20 +83,36 @@ const SingPassDetails = () => {
   };
 
   return (
-    <div>
-      <h1>Login with Singpass</h1>
-      <label>
-        Enter NRIC:
-        <input 
-          type="text"
-          value={nric} 
-          onChange={(e) => setNric(e.target.value)} 
-        />
-      </label>
-      <button onClick={handleSubmit}>Submit</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
-  );
+    <MDBContainer fluid>
+    
+          <MDBRow className='d-flex justify-content-center align-items-center h-100 bg-light'>
+            <MDBCol col='12'>
+    
+              <MDBCard className='bg-white my-3 mx-auto' style={{borderRadius: '1rem', maxWidth: '500px'}}>
+                <MDBCardBody className='p-5 w-100 d-flex flex-column'>
+
+                  <img className='rounded mb-3' src='vulneros_logo_1.png'></img>
+                    
+                  <MDBInput wrapperClass='mb-4 w-100' label='NRIC' id='formControlLg' type='email' size="lg" value={nric} onChange={(e: { target: { value: SetStateAction<string>; }; }) => setNric(e.target.value)} />
+                  <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlLg' type='password' size="lg"/>
+    
+                  <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password' />
+                  <MDBBtn 
+                    style={{ width: '400px', height: '50px', transition: 'all 0.2s ease-in-out', boxSizing: 'border-box' }}
+                    onClick={handleSubmit} 
+                    className="btn btn-danger mb-4" 
+                    size='lg'>
+                    Login With Singpass
+                  </MDBBtn>
+                  {error && <p style={{ color: 'red' }}>{error}</p>}
+                </MDBCardBody>
+              </MDBCard>
+    
+            </MDBCol>
+          </MDBRow>
+    
+        </MDBContainer>
+      );
 };
 
 export default SingPassDetails;

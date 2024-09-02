@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import "./MainPageBen.css"
 import BenEventCard from './BenEventCard';
 import { format, parseISO } from 'date-fns';
+import ProgBar from './ProgBar';
+import BenReqEvent from './BenReqEvent';
 
 type Beneficiary = {
   nric: string,
@@ -66,6 +68,7 @@ const MainPageBen = () => {
       } catch (error) {
         console.error('Error fetching events:', error);
       }
+      
     };
 
     fetchEvents();
@@ -83,11 +86,22 @@ const MainPageBen = () => {
     setEvents([...events, event]);
   }
 
+  const handleReqEvent = async (newEvent: Event) => {
+    // Set the new event along with the previously selected events
+    setSelectedEvents([...selectedEvents, newEvent]);
+    console.log("HELLO" + JSON.stringify(selectedEvents));
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-3">
-          <h4 className="text-center mt-4">Welcome, {beneficiary.name}!</h4>
+          <h3 className="text-center mt-3">Welcome, {beneficiary.name}!</h3>
+          <p className="text-center mt-3">Your Vulnerability Score:</p>
+          <ProgBar progress={beneficiary.vul_score} height={30}/>
+          <div className='mt-2'>
+          <BenReqEvent languages={beneficiary.languages} address={beneficiary.address} vul_score={beneficiary.vul_score} onEventCreated={handleReqEvent} />
+          </div>
         </div>
 
         <div className="col-5">
@@ -118,7 +132,7 @@ const MainPageBen = () => {
             <p>No events selected yet.</p>
           ) : (
             <ul className="list-group">
-              {selectedEvents.map((event, index) => (
+              {selectedEvents.flat().map((event, index) => (
                 <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                   <div>
                     <strong>{event.title}</strong> - {format(parseISO(event.start_time),"d MMM yyyy h:mma")} to {format(parseISO(event.end_time),"h:mma")}

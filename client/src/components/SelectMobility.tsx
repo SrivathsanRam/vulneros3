@@ -4,7 +4,7 @@ import WheelPicker from 'react-wheelpicker';
 import styled from 'styled-components';
 
 const Colum = styled.div`
-  width: 45px;
+  width: 200 px;
   box-sizing: border-box;
   height: auto;
   height: 135px;
@@ -57,21 +57,29 @@ const SelectMobility = () => {
   };
 
   return (
-    <div>
-      <h1>Select Your Mobility Status</h1>
-      <Colum style={{width: 300}}>
-      <WheelPicker
-        animation='flat'
-        data={mobilityOptions}
-        height={40}
-        parentHeight={150}
-        fontSize={13}
-        defaultSelection={1}
-        updateSelection={(selectedOption) => setMobility(sendOptions[selectedOption])}
-        scrollerId="scroll-select-mobility"
-      />
-      </Colum>
-      <button onClick={handleNext}>Next</button>
+    <div className="container my-5">
+      <h1 className="text-center mb-4">Select Your Mobility Status</h1>
+
+      <div className="d-flex justify-content-center">
+        <Colum>
+          <WheelPicker
+            animation="flat"
+            data={mobilityOptions}
+            height={40}
+            parentHeight={135}
+            fontSize={16} // Larger font size for better readability
+            defaultSelection={1}
+            updateSelection={(selectedOption) => setMobility(sendOptions[selectedOption])}
+            scrollerId="scroll-select-mobility"
+          />
+        </Colum>
+      </div>
+
+      <div className="text-center mt-4">
+        <button type="button" className="btn btn-primary btn-lg" onClick={handleNext}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };

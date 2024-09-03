@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import WheelPicker from 'react-wheelpicker';
+import styled from 'styled-components';
+
+const Colum = styled.div`
+  width: 160px;
+  box-sizing: border-box;
+  height: auto;
+  height: 135px;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const numLovedOptions = ['0','1','2','3','3+'];
 const visitFrequencyOptions = ["Living with", "Daily", "Weekly", "Monthly", "Never"];
@@ -34,7 +48,7 @@ const InputLovedOnes: React.FC = () => {
       });
 
       if (response.ok) {
-        navigate('/mainpage-ben');
+        navigate('/onboarded');
       } else {
         alert('Failed to save information. Please try again.');
       }
@@ -44,30 +58,48 @@ const InputLovedOnes: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Input Number of Loved Ones Caring for You</h1>
-      <WheelPicker
-        animation='flat'
-        data={numLovedOptions}
-        height={40}
-        parentHeight={150}
-        fontSize={13}
-        defaultSelection={0}
-        updateSelection={(selectedOption) => setLovedOnes(numLovedOptions[selectedOption])}
-        scrollerId='scroll-select-num'
-      />
-      <h2>How Often Do They Visit You?</h2>
-      <WheelPicker
-        animation='flat'
-        data={visitFrequencyOptions}
-        height={40}
-        parentHeight={150}
-        fontSize={13}
-        defaultSelection={0}
-        updateSelection={(selectedOption) => setVisitFrequency(visitFrequencyOptions[selectedOption])}
-        scrollerId='scroll-select-loved'
-      />
-      <button onClick={handleSubmit}>Submit</button>
+    <div className="container my-5">
+      <h1 className="text-center mb-4">Input Number of Loved Ones Caring for You</h1>
+      
+      <div className="d-flex justify-content-center">
+        <Colum>
+          <WheelPicker
+            animation="flat"
+            data={numLovedOptions}
+            height={40}
+            parentHeight={135}
+            fontSize={16} // Slightly larger font for readability
+            defaultSelection={0}
+            updateSelection={(selectedOption) => setLovedOnes(numLovedOptions[selectedOption])}
+            scrollerId="scroll-select-num"
+            
+          />
+        </Colum>
+      </div>
+
+      <h2 className="text-center mt-4">How Often Do They Visit You?</h2>
+      
+      <div className="d-flex justify-content-center mt-4">
+        <Colum>
+          <WheelPicker
+            animation="flat"
+            data={visitFrequencyOptions}
+            height={40}
+            parentHeight={135}
+            fontSize={16} // Larger font size for better readability
+            defaultSelection={0}
+            updateSelection={(selectedOption) => setVisitFrequency(visitFrequencyOptions[selectedOption])}
+            scrollerId="scroll-select-loved"
+            
+          />
+        </Colum>
+      </div>
+
+      <div className="text-center mt-5">
+        <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
     </div>
   );
 };

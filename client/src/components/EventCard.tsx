@@ -37,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({ title, icon, proximity, languages
           <p><strong>Date:</strong> {formattedStart} to {formattedEnd}</p>
         </div>
         <div>
-          <img src={icon} alt="event icon" style={{ width: '80px', height: '80px' }} />
+          <img src={icon} alt="event icon" style={{ width: '110px', height: '110px' }} />
         </div>
       </div>
 

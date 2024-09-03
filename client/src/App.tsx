@@ -16,6 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<SingPassDetails />} />
+        <Route path="/onboarded" element={<SingPassDetails />} />
         <Route path="/mainpage-vol" element={<MainPageVol />} />
         <Route path="/mainpage-ben" element={<MainPageBen />} />
         <Route path="/select-languages" element={<SelectLanguages />} />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const availableLanguages = ["English", "Mandarin", "Malay", "Tamil"];
+const availableLanguages = ["English", "Mandarin", "Malay", "Tamil","Sign Language"];
 
 const SelectLanguages = () => {
   const location = useLocation();
@@ -45,20 +45,36 @@ const SelectLanguages = () => {
   };
 
   return (
-    <div>
-      <h1>Select Your Preferred Languages</h1>
+    <div className="container my-5">
+  <h1 className="text-center mb-4">Select Your Preferred Languages</h1>
+  <form>
+    <div className="row">
       {availableLanguages.map((language) => (
-        <label key={language}>
-          <input
-            type="checkbox"
-            checked={selectedLanguages.includes(language)}
-            onChange={() => handleLanguageChange(language)}
-          />
-          {language}
-        </label>
+        <div className="col-md-4 mb-4" key={language}>
+          <div className="form-check elder-friendly-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id={language}
+              checked={selectedLanguages.includes(language)}
+              onChange={() => handleLanguageChange(language)}
+              style={{ transform: 'scale(1.5)' }} // Increase the size of the checkbox
+            />
+            <label className="form-check-label" htmlFor={language} style={{ fontSize: '1.25rem' }}>
+              {language}
+            </label>
+          </div>
+        </div>
       ))}
-      <button onClick={handleNext}>Next</button>
     </div>
+    <div className="text-center mt-4">
+      <button type="button" className="btn btn-primary btn-lg" onClick={handleNext}>
+        Next
+      </button>
+    </div>
+  </form>
+</div>
+
   );
 };
 

@@ -35,9 +35,10 @@ const ProgBar: React.FC<ProgBarProps> = ({progress,height}) => {
       }
      
       const progresstext = {
-        padding: 10,
+        padding: 100,
         color: 'black',
-        fontWeight: 900
+        fontWeight: 900,
+        align: 'center',
       }
        
     return (

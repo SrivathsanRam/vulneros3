@@ -227,10 +227,12 @@ def get_beneficiary_events():
         filtered_events = []
 
         # Filter events based on volunteer's certifications and languages
+        print(events)
         for event in events:
             event_requirements = event.get('prerequisites', {})
             event_languages = event_requirements.get('Languages', [])
             event['proximity'] = calculate_proximity(beneficiary_address,event['location'])
+            print("EVENT"+str(event))
             if any(language in event_languages for language in beneficiary_languages):
                 if (beneficiary_mobility == 'Moderate' and event['proximity']<40):
                     filtered_events.append(event)
@@ -286,6 +288,25 @@ def req_event():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+#GET ALL EVENTS
+@app.route('/getallevents', methods=['GET'])
+def get_all_events():
+    try:
+        # Query the events from Supabase
+        response = supabase.table('Events').select("*").execute()
+        
+        # Check if the query was successful
+        if response.data:
+            events = response.data
+            print(events)
+            return jsonify(events), 200
+        else:
+            return jsonify({"error": "No events found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

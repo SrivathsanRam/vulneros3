@@ -1,6 +1,6 @@
 
-import { SetStateAction, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { SetStateAction, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   MDBBtn,
   MDBContainer,
@@ -12,6 +12,7 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
+import { Button, Modal } from 'react-bootstrap';
 
 const SingPassDetails = () => {
   type Volunteer = {
@@ -39,6 +40,16 @@ const SingPassDetails = () => {
   const [nric, setNric] = useState('');
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    if (location.state && location.state.from === 'input-loved-ones') {
+      setShowModal(true); // Show the modal
+    }
+  }, [location]);
+
+  const handleClose = () => setShowModal(!showModal);
+
   const handleSubmit = async () => {
     setError(null);
     try {
@@ -84,7 +95,18 @@ const SingPassDetails = () => {
 
   return (
     <MDBContainer fluid>
-    
+        <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Successfully Onboarded</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
           <MDBRow className='d-flex justify-content-center align-items-center h-100 bg-light'>
             <MDBCol col='12'>
     
